@@ -46,6 +46,7 @@ public:
       if (impossible_values[N - 1].size() < N) {
         for (int c = 0; c < N; c++) {
           if (!impossible_values[N - 1].count(c)) {
+            cout << "(" << N - 1 << ", " << c << ") is POSSIBLE\n";
             positions.push_back(c);
           }
         }
