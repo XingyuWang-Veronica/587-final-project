@@ -46,6 +46,9 @@ public:
       impossible_values[r].insert(c);
       cout << "(" << r << ", " << c << ") is impossible\n";
     }
+    if (impossible_values[row + 1].size() == N) {
+      return Invalid;
+    }
     if (row == N - 2) {
       assert(impossible_values[N - 1].size() > 0);
       if (impossible_values[N - 1].size() < N) {
