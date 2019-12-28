@@ -192,7 +192,7 @@ int main(int argc, char * argv[]) {
   // } else {
   //   cout << "No solution found\n";
   // }
-  cout << "Number of solutions on a " << N << " * " << N << " board is " << num_solutions << '\n';
+  cout << "Number of solutions on a " << N << "*" << N << " board is " << num_solutions << '\n';
 	cout << "Duration is " << duration << " in seconds\n";
   return 0;
 }
