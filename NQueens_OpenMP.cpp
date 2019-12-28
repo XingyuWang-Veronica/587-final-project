@@ -17,11 +17,11 @@ public:
   deque<int> positions; // positions[row] = col
   unordered_map<int, unordered_set<int>> impossible_values;
   int update() {
-    cout << "positions is ";
+    /*cout << "positions is ";
     for (int i = 0; i < positions.size(); i++) {
       cout << positions[i] << " ";
     }
-    cout << '\n';
+    cout << '\n';*/
     int row = positions.size() - 1;
     int col = positions[row];
     for (int r = row + 1; r < N; r++) {
