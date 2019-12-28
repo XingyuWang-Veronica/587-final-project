@@ -140,7 +140,7 @@ int main(int argc, char * argv[]) {
           int ret = new_board.update();
           if (ret == Found) {
             found = true;
-            omp_set_lock(&mutex);
+            // omp_set_lock(&mutex);
             final_board = new_board;
             /*for (int r = 0; r < N; r++) {
               for (int c = 0; c < N; c++) {
@@ -152,7 +152,7 @@ int main(int argc, char * argv[]) {
               }
               cout << '\n';
             }*/
-            omp_unset_lock(&mutex);
+            // omp_unset_lock(&mutex);
             break;
           } else if (ret == Invalid) {
             continue;
@@ -178,9 +178,9 @@ int main(int argc, char * argv[]) {
     for (int r = 0; r < N; r++) {
       for (int c = 0; c < N; c++) {
         if (final_board.positions[r] == c) {
-          cout << "x ";
+          cout << "Q ";
         } else {
-          cout << "o ";
+          cout << "- ";
         }
       }
       cout << '\n';
@@ -188,6 +188,6 @@ int main(int argc, char * argv[]) {
   } else {
     cout << "No solution found\n";
   }
-	cout << "Duration is " << duration << "\n";
+	cout << "Duration is " << duration << " in seconds\n";
   return 0;
 }
