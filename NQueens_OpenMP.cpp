@@ -15,7 +15,7 @@ class Board {
 public:
   int N;
   deque<int> positions; // positions[row] = col
-  unordered_map<int, unordered_set<int>> impossible_values;
+  deque<unordered_set<int>> impossible_values(N, unordered_set<int>); // impossible_values[row] = set of impossible columns
   int update() {
     /*cout << "positions is ";
     for (int i = 0; i < positions.size(); i++) {
@@ -155,10 +155,10 @@ int main(int argc, char * argv[]) {
             continue;
           } else if (ret == Continue) {
             // push this new task to pq
-            #pragma omp critical
-            {
+            // #pragma omp critical
+            // {
               pq.push(new_board);
-            }
+            // }
             #pragma omp atomic
             num_tasks_alive++;
           }
