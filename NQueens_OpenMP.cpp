@@ -53,11 +53,12 @@ public:
     if (impossible_values[row + 1].size() == N) {
       return Invalid;
     }
-    // for (int r = N / 3; r < N; r++) {
-    //   if (impossible_values[r].size() == N) {
-    //     return Invalid;
-    //   }
-    // }
+    int start_row = N / 3 > row + 1 ? N / 3 : row + 1;
+    for (int r = start_row; r < N; r++) {
+      if (impossible_values[r].size() == N) {
+        return Invalid;
+      }
+    }
     if (row == N - 2) {
       assert(impossible_values[N - 1].size() > 0);
       if (impossible_values[N - 1].size() < N) {
