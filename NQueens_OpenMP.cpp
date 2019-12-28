@@ -15,7 +15,11 @@ class Board {
 public:
   int N;
   deque<int> positions; // positions[row] = col
-  deque<unordered_set<int>> impossible_values(N, unordered_set<int>); // impossible_values[row] = set of impossible columns
+  deque<unordered_set<int>> impossible_values; // impossible_values[row] = set of impossible columns
+  Board(int n) {
+    N = n;
+    impossible_values.resize(N);
+  }
   int update() {
     /*cout << "positions is ";
     for (int i = 0; i < positions.size(); i++) {
@@ -85,7 +89,7 @@ int main(int argc, char * argv[]) {
     return 1;
   }
   int N = atoi(argv[1]);
-  Board final_board;
+  Board final_board(N);
   priority_queue<Board, vector<Board>, Compare> pq;
   int num_tasks_alive = N;
   bool found = false;
@@ -100,8 +104,7 @@ int main(int argc, char * argv[]) {
     {
       int n = omp_get_num_threads();
       for (int c = 0; c < N; c++) {
-        Board new_board;
-        new_board.N = N;
+        Board new_board(N);
         new_board.positions.push_back(c);
         new_board.update();
         pq.push(new_board);
@@ -110,7 +113,7 @@ int main(int argc, char * argv[]) {
     #pragma omp barrier
     int id = omp_get_thread_num();
     while (num_tasks_alive > 0 && !found) {
-      Board top;
+      Board top(N);
       bool shall_continue = false;
       #pragma omp critical
       {
