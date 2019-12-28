@@ -158,10 +158,10 @@ int main(int argc, char * argv[]) {
             continue;
           } else if (ret == Continue) {
             // push this new task to pq
-            // #pragma omp critical
-            // {
+            #pragma omp critical
+            {
               pq.push(new_board);
-            // }
+            }
             #pragma omp atomic
             num_tasks_alive++;
           }
