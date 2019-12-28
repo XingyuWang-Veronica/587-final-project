@@ -89,12 +89,13 @@ int main(int argc, char * argv[]) {
     return 1;
   }
   int N = atoi(argv[1]);
-  Board final_board(N);
+  // Board final_board(N);
+  int num_solutions = 0;
   priority_queue<Board, vector<Board>, Compare> pq;
   int num_tasks_alive = N;
-  bool found = false;
-	omp_lock_t mutex;
-	omp_init_lock(&mutex);
+  // bool found = false;
+	// omp_lock_t mutex;
+	// omp_init_lock(&mutex);
   double start_time = omp_get_wtime();
 
   #pragma omp parallel
@@ -111,8 +112,9 @@ int main(int argc, char * argv[]) {
       }
     }
     #pragma omp barrier
-    int id = omp_get_thread_num();
-    while (num_tasks_alive > 0 && !found) {
+    // int id = omp_get_thread_num();
+    // while (num_tasks_alive > 0 && !found) {
+    while (num_tasks_alive > 0) {
       Board top(N);
       bool shall_continue = false;
       #pragma omp critical
@@ -139,9 +141,9 @@ int main(int argc, char * argv[]) {
           // update
           int ret = new_board.update();
           if (ret == Found) {
-            found = true;
+            // found = true;
             // omp_set_lock(&mutex);
-            final_board = new_board;
+            // final_board = new_board;
             /*for (int r = 0; r < N; r++) {
               for (int c = 0; c < N; c++) {
                 if (final_board.positions[r] == c) {
@@ -153,7 +155,9 @@ int main(int argc, char * argv[]) {
               cout << '\n';
             }*/
             // omp_unset_lock(&mutex);
-            break;
+            #pragma omp atomic
+            num_solutions++;
+            // break;
           } else if (ret == Invalid) {
             continue;
           } else if (ret == Continue) {
@@ -173,21 +177,22 @@ int main(int argc, char * argv[]) {
   }
   double end_time = omp_get_wtime();
   double duration = end_time - start_time;
-  if (found) {
-    cout << "Found a solution: \n";
-    for (int r = 0; r < N; r++) {
-      for (int c = 0; c < N; c++) {
-        if (final_board.positions[r] == c) {
-          cout << "Q ";
-        } else {
-          cout << "- ";
-        }
-      }
-      cout << '\n';
-    }
-  } else {
-    cout << "No solution found\n";
-  }
+  // if (found) {
+  //   cout << "Found a solution: \n";
+  //   for (int r = 0; r < N; r++) {
+  //     for (int c = 0; c < N; c++) {
+  //       if (final_board.positions[r] == c) {
+  //         cout << "Q ";
+  //       } else {
+  //         cout << "- ";
+  //       }
+  //     }
+  //     cout << '\n';
+  //   }
+  // } else {
+  //   cout << "No solution found\n";
+  // }
+  cout << "Number of solutions on a " << N << " * " << N << " board is " << num_solutions << '\n';
 	cout << "Duration is " << duration << " in seconds\n";
   return 0;
 }
