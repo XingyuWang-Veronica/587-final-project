@@ -115,6 +115,7 @@ int main(int argc, char * argv[]) {
       for (int c = 0; c < N; c++) {
         int r = row + 1;
         if (!top.impossible_values[r].count(c)) {
+          cout << "(" << r << ", " << c << ") is POSSIBLE 2\n";
           Board new_board;
           new_board.positions = top.positions;
           new_board.N = top.N;
@@ -125,6 +126,16 @@ int main(int argc, char * argv[]) {
             found = true;
             omp_set_lock(&mutex);
             final_board = new_board;
+            for (int r = 0; r < N; r++) {
+              for (int c = 0; c < N; c++) {
+                if (final_board.positions[r] == c) {
+                  cout << "x ";
+                } else {
+                  cout << "o ";
+                }
+              }
+              cout << '\n';
+            }
             omp_unset_lock(&mutex);
             break;
           } else if (ret == Invalid) {
