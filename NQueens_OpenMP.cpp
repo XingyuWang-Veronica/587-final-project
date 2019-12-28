@@ -26,7 +26,7 @@ public:
     int col = positions[row];
     for (int r = row + 1; r < N; r++) {
       impossible_values[r].insert(col);
-      cout << "(" << r << ", " << col << ") is impossible\n";
+      // cout << "(" << r << ", " << col << ") is impossible\n";
     }
     for (int i = 0; i < N; i++) {
       int r = row + i;
@@ -35,7 +35,7 @@ public:
         continue;
       }
       impossible_values[r].insert(c);
-      cout << "(" << r << ", " << c << ") is impossible\n";
+      // cout << "(" << r << ", " << c << ") is impossible\n";
     }
     for (int i = 0; i < N; i++) {
       int r = row + i;
@@ -44,7 +44,7 @@ public:
         continue;
       }
       impossible_values[r].insert(c);
-      cout << "(" << r << ", " << c << ") is impossible\n";
+      // cout << "(" << r << ", " << c << ") is impossible\n";
     }
     if (impossible_values[row + 1].size() == N) {
       return Invalid;
@@ -54,7 +54,7 @@ public:
       if (impossible_values[N - 1].size() < N) {
         for (int c = 0; c < N; c++) {
           if (!impossible_values[N - 1].count(c)) {
-            cout << "(" << N - 1 << ", " << c << ") is POSSIBLE\n";
+            // cout << "(" << N - 1 << ", " << c << ") is POSSIBLE\n";
             positions.push_back(c);
           }
         }
@@ -123,7 +123,7 @@ int main(int argc, char * argv[]) {
       for (int c = 0; c < N; c++) {
         int r = row + 1;
         if (!top.impossible_values[r].count(c)) {
-          cout << "(" << r << ", " << c << ") is POSSIBLE 2\n";
+          // cout << "(" << r << ", " << c << ") is POSSIBLE 2\n";
           Board new_board = top;
           new_board.positions.push_back(c);
           // update
@@ -132,7 +132,7 @@ int main(int argc, char * argv[]) {
             found = true;
             omp_set_lock(&mutex);
             final_board = new_board;
-            for (int r = 0; r < N; r++) {
+            /*for (int r = 0; r < N; r++) {
               for (int c = 0; c < N; c++) {
                 if (final_board.positions[r] == c) {
                   cout << "x ";
@@ -141,7 +141,7 @@ int main(int argc, char * argv[]) {
                 }
               }
               cout << '\n';
-            }
+            }*/
             omp_unset_lock(&mutex);
             break;
           } else if (ret == Invalid) {
