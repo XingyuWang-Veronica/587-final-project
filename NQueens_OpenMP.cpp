@@ -121,9 +121,7 @@ int main(int argc, char * argv[]) {
         int r = row + 1;
         if (!top.impossible_values[r].count(c)) {
           cout << "(" << r << ", " << c << ") is POSSIBLE 2\n";
-          Board new_board;
-          new_board.positions = top.positions;
-          new_board.N = top.N;
+          Board new_board = top;
           new_board.positions.push_back(c);
           // update
           int ret = new_board.update();
