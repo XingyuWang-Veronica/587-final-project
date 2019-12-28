@@ -73,8 +73,8 @@ struct Compare {
     int b2_size = b2.N - b2.positions.size();
     int b1_numImpossible = b1.impossible_values[b1.N - 1].size();
     int b2_numImpossible = b2.impossible_values[b2.N - 1].size();
-    int p1 = (b1.N - b1_numImpossible) / b1_size * b1.positions.size();
-    int p2 = (b2.N - b2_numImpossible) / b2_size * b2.positions.size();
+    int p1 = (b1.N - b1_numImpossible) / b1_size;
+    int p2 = (b2.N - b2_numImpossible) / b2_size;
     return p1 < p2;
   }
 };
@@ -104,7 +104,10 @@ int main(int argc, char * argv[]) {
         new_board.N = N;
         new_board.positions.push_back(c);
         new_board.update();
-        pq.push(new_board);
+	#pragma omp critical
+	{
+	        pq.push(new_board);
+	}
       }
     }
     #pragma omp barrier
