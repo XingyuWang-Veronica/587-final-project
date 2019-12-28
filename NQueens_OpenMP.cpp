@@ -50,12 +50,17 @@ public:
       impossible_values[r].insert(c);
       // cout << "(" << r << ", " << c << ") is impossible\n";
     }
-    if (impossible_values[row + 1].size() == N) {
-      return Invalid;
+    // if (impossible_values[row + 1].size() == N) {
+    //   return Invalid;
+    // }
+    for (int r = N / 3; r < N; r++) {
+      if (impossible_values[r].size() == N) {
+        return Invalid;
+      }
     }
     if (row == N - 2) {
       assert(impossible_values[N - 1].size() > 0);
-      if (impossible_values[N - 1].size() < N) {
+      // if (impossible_values[N - 1].size() < N) {
         for (int c = 0; c < N; c++) {
           if (!impossible_values[N - 1].count(c)) {
             // cout << "(" << N - 1 << ", " << c << ") is POSSIBLE\n";
@@ -63,8 +68,8 @@ public:
           }
         }
         return Found;
-      }
-      return Invalid;
+      // }
+      // return Invalid;
     }
     return Continue;
   }
