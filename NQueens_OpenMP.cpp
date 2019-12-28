@@ -9,11 +9,6 @@
 
 using namespace std;
 
-struct Pair {
-  int row;
-  int col;
-}
-
 enum State {Found, Invalid, Continue};
 
 class Board {
@@ -60,7 +55,7 @@ public:
 
 struct Compare {
   bool operator() (Board const& b1, Board const& b2) {
-    return b1.size() < b2.size();
+    return b1.positions.size() < b2.positions.size();
   }
 };
 
@@ -74,6 +69,8 @@ int main(int argc, char * argv[]) {
   priority_queue<Board, vector<Board>, Compare> pq;
   int num_tasks_alive = N;
   bool found = false;
+	omp_lock_t mutex;
+	omp_init_lock(&mutex);
   double start_time = omp_get_wtime();
 
   #pragma omp parallel
@@ -112,7 +109,7 @@ int main(int argc, char * argv[]) {
       int col = top.positions[row];
       for (int c = 0; c < N; c++) {
         int r = row + 1;
-        if (!impossible_values[r].count(c)) {
+        if (!top.impossible_values[r].count(c)) {
           Board new_board;
           new_board.positions = top.positions;
           new_board.N = top.N;
@@ -121,8 +118,9 @@ int main(int argc, char * argv[]) {
           int ret = new_board.update();
           if (ret == Found) {
             found = true;
-            #pragma omp atomic
+            omp_set_lock(&mutex);
             final_board = new_board;
+		omp_unset_lock(&mutex);
             break;
           } else if (ret == Invalid) {
             continue;
