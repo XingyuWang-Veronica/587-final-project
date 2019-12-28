@@ -27,7 +27,7 @@ public:
       int r = row + i;
       int c = col + i;
       if (r >= N || c >= N) {
-        break;
+        continue;
       }
       impossible_values[r].insert(c);
       cout << "(" << r << ", " << c << ") is impossible\n";
@@ -36,7 +36,7 @@ public:
       int r = row + i;
       int c = col - i;
       if (r >= N || c < 0) {
-        break;
+        continue;
       }
       impossible_values[r].insert(c);
       cout << "(" << r << ", " << c << ") is impossible\n";
