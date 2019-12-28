@@ -21,6 +21,7 @@ public:
     int col = positions[row];
     for (int r = row + 1; r < N; r++) {
       impossible_values[r].insert(col);
+      cout << "(" << r << ", " << col << ") is impossible\n";
     }
     for (int i = 0; i < N; i++) {
       int r = row + i;
@@ -29,6 +30,7 @@ public:
         break;
       }
       impossible_values[r].insert(c);
+      cout << "(" << r << ", " << c << ") is impossible\n";
     }
     for (int i = 0; i < N; i++) {
       int r = row + i;
@@ -36,6 +38,8 @@ public:
       if (r >= N || c < 0) {
         break;
       }
+      impossible_values[r].insert(c);
+      cout << "(" << r << ", " << c << ") is impossible\n";
     }
     if (row == N - 2) {
       assert(impossible_values[N - 1].size() > 0);
@@ -120,7 +124,7 @@ int main(int argc, char * argv[]) {
             found = true;
             omp_set_lock(&mutex);
             final_board = new_board;
-		omp_unset_lock(&mutex);
+            omp_unset_lock(&mutex);
             break;
           } else if (ret == Invalid) {
             continue;
