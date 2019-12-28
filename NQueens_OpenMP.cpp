@@ -104,10 +104,7 @@ int main(int argc, char * argv[]) {
         new_board.N = N;
         new_board.positions.push_back(c);
         new_board.update();
-	#pragma omp critical
-	{
-	        pq.push(new_board);
-	}
+        pq.push(new_board);
       }
     }
     #pragma omp barrier
@@ -158,7 +155,10 @@ int main(int argc, char * argv[]) {
             continue;
           } else if (ret == Continue) {
             // push this new task to pq
-            pq.push(new_board);
+            #pragma omp critical
+            {
+              pq.push(new_board);
+            }
             #pragma omp atomic
             num_tasks_alive++;
           }
