@@ -67,13 +67,15 @@ public:
 };
 
 struct Compare {
-  bool operator() (Board & b1, Board & b2) {
+  bool operator() (Board const& b1, Board const& b2) {
     // return b1.positions.size() < b2.positions.size();
     int b1_size = b1.N - b1.positions.size();
     int b2_size = b2.N - b2.positions.size();
     int b1_numImpossible = b1.impossible_values[b1.N - 1].size();
     int b2_numImpossible = b2.impossible_values[b2.N - 1].size();
-    return b1_numImpossible / b1_size > b2_numImpossible / b2_size;
+    int p1 = (b1.N - b1_numImpossible) / b1_size * b1_positions.size();
+    int p2 = (b2.N - b2_numImpossible) / b2_size * b2_positions.size();
+    return p1 < p2;
   }
 };
 
