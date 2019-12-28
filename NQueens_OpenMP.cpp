@@ -50,9 +50,9 @@ public:
       impossible_values[r].insert(c);
       // cout << "(" << r << ", " << c << ") is impossible\n";
     }
-    // if (impossible_values[row + 1].size() == N) {
-    //   return Invalid;
-    // }
+    if (impossible_values[row + 1].size() == N) {
+      return Invalid;
+    }
     for (int r = N / 3; r < N; r++) {
       if (impossible_values[r].size() == N) {
         return Invalid;
