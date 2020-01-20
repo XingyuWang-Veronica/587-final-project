@@ -1,3 +1,5 @@
+NQueens-debug
+NQueens_OpenMP_random
 NQueens_OpenMP
 NQueens_MPI
 slurm*
